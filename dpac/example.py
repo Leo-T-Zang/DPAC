@@ -1,8 +1,9 @@
 import torch
 from transformers import AutoTokenizer, AutoModelForMaskedLM
 import esm
-from model import DPAC
-from utils import ModelConfig
+import os
+from .model import DPAC
+from .utils import ModelConfig
 
 
 # Example of using DPAC for scoring
@@ -10,7 +11,9 @@ from utils import ModelConfig
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model_config = ModelConfig()
 scoring_model = DPAC(model_config).to(device)
-scoring_model.load_state_dict(torch.load('weight.pt')['model_state_dict'])
+dpac_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+weight_path = os.path.join(dpac_dir, 'dpac/weight.pt')
+scoring_model.load_state_dict(torch.load(weight_path)['model_state_dict'])
 scoring_model.eval()
 
 dna_tokenizer = AutoTokenizer.from_pretrained("InstaDeepAI/nucleotide-transformer-v2-500m-multi-species", trust_remote_code=True)
