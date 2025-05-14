@@ -1,4 +1,4 @@
-# DPAC
+# DPAC: Prediction and Design of Protein-DNA Interactions via Sequence-Based Contrastive Learning
 
 ## Installation
 
